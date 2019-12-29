@@ -1,0 +1,17 @@
+Resources:
+  SensorDataTable:
+    Type: 'AWS::DynamoDB::Table'
+    DeletionPolicy: Retain
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: sensorId
+          AttributeType: S
+      KeySchema:
+        -
+          AttributeName: sensorId
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      TableName: ${self:provider.environment.DYNAMODB_TABLE}

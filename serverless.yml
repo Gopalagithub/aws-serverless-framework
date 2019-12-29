@@ -1,0 +1,38 @@
+service:
+  name: aws-serverless-assignment
+
+custom:
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ap-south-1
+  stage: dev
+  MemorySize: 128
+  environment:
+    DYNAMODB_TABLE: SensorDataTable
+  iamRoleStatements:
+    - ${file(./config/iam/dynamodb.yml)}
+    - ${file(./config/iam/lambdaexecution.yml)}
+
+functions:
+    - ${file(./app/sensor/create/serverless.yml)}
+    - ${file(./app/sensor/list/serverless.yml)}
+    - ${file(./app/sensor/get/serverless.yml)}
+    - ${file(./app/sensor/update/serverless.yml)}
+    - ${file(./app/sensor/delete/serverless.yml)}
+
+resources:
+  - ${file(./config/resources/dynamodb.yml)}

@@ -1,0 +1,14 @@
+get:
+  handler: app/sensor/get/index.handler
+  package:
+    individually: true
+    exclude:
+      - app/**
+    include:
+      - app/sensor/get/index.js
+      - app/helper/dynamodb.js
+  events:
+    - http:
+        path: /api/v1/sensors
+        method: get
+        cors: true

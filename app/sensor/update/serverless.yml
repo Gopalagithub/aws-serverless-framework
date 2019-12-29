@@ -1,0 +1,14 @@
+update:
+  handler: app/sensor/update/index.handler
+  package:
+    individually: true
+    exclude:
+      - app/**
+    include:
+      - app/sensor/update/index.js
+      - app/sensor/dynamodb.js
+  events:
+    - http:
+        path: /api/v1/sensors
+        method: put
+        cors: true
