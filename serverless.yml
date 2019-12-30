@@ -11,7 +11,7 @@ custom:
 # Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
-
+  - serverless-offline
 package:
   individually: true
 
@@ -24,8 +24,8 @@ provider:
   environment:
     DYNAMODB_TABLE: SensorDataTable
   iamRoleStatements:
-    - ${file(./config/iam/dynamodb.yml)}
-    - ${file(./config/iam/lambdaexecution.yml)}
+    - ${file(./app/config/iam/dynamodb.yml)}
+    - ${file(./app/config/iam/lambdaexecution.yml)}
 
 functions:
     - ${file(./app/sensor/create/serverless.yml)}
@@ -35,4 +35,4 @@ functions:
     - ${file(./app/sensor/delete/serverless.yml)}
 
 resources:
-  - ${file(./config/resources/dynamodb.yml)}
+  - ${file(./app/config/resources/dynamodb.yml)}

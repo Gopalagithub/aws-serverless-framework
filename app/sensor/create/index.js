@@ -1,7 +1,7 @@
-const { sensorAction } = require('./action');
-const { sensorDbOperation } = require('./service');
+const { saveAction } = require('./action');
+const { saveDateToDb } = require('./service');
 
 module.exports.handler = async (event, context, callback) => {
-  const data = sensorAction(event);
-  return await sensorDbOperation(data, callback);
+  const data = saveAction(event);
+  return await saveDateToDb(data, callback);
 };

@@ -6,6 +6,8 @@ delete:
       - app/**
     include:
       - app/sensor/delete/index.js
+      - app/sensor/delete/action.js
+      - app/sensor/delete/service.js
       - app/helper/dynamodb.js
   events:
     - http:

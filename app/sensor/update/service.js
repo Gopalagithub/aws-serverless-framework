@@ -6,7 +6,7 @@ module.exports.saveDateToDb = async (params, callback) => {
       responseBody = JSON.stringify(data);
       statusCode = 201;
     }catch(error){
-        responseBody = 'Unable to put sensorsData!!';
+        responseBody = 'Unable to update the sensorsData!!';
         statusCode = 403;
     }
   

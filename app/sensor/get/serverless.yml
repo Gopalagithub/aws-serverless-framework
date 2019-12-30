@@ -9,6 +9,6 @@ get:
       - app/helper/dynamodb.js
   events:
     - http:
-        path: /api/v1/sensors
+        path: /api/v1/sensors/{id}
         method: get
         cors: true

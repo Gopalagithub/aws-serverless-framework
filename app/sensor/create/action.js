@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 
-module.exports.sensorAction = (event) => {
+module.exports.saveAction = (event) => {
     const timestamp = new Date().getTime();
     const data = event.body;
     const params = {

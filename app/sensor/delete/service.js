@@ -1,15 +1,16 @@
 const client = require('../../helper/dynamodb');
 
-module.exports.saveDateToDb = async (params, callback) => {
+module.exports.deleteDataFromDB = async (params, callback) => {
     try{
-      const data = await client.put(params).promise();
+      const data = await client.delete(params).promise();
       responseBody = JSON.stringify(data);
-      statusCode = 201;
+      statusCode = 204;
     }catch(error){
-        responseBody = 'Unable to put sensorsData!!';
+        process.stderr.write(error);
+        responseBody = 'Unable to delete sensorsData!!';
         statusCode = 403;
     }
-  
+
     return {
       statusCode: statusCode,
       headers: {
