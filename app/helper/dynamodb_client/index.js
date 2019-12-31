@@ -9,6 +9,4 @@ if (process.env.IS_OFFLINE) {
   };
 }
 
-const client = new AWS.DynamoDB.DocumentClient(options);
-
-module.exports = client;
+module.exports.client = new AWS.DynamoDB.DocumentClient(options);

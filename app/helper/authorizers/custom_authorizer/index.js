@@ -11,20 +11,20 @@ const ssm = new AWS.SSM({region: 'ap-south-1'});
   * @param {function} callback
   * @returns {Object} policyDocument
   */
-exports.handler = async (event, context, callback) => {
+exports.handler = async (event) => {
     try{
         const params = {
-            Names: [process.env.SECRET_KEY],
+            Name: "/mySense/Secrets/dev",
             WithDecryption: true
         };
         let apiKey;
         let effect;
-        apiKey = await ssm.getParameters(params).promise();
-        apiKey = apiKey.Parameters[0].Value;
-        (event.authorizationToken === apiKey)? 'Allow': 'Deny';
-        const policyDocument = buildIAMPolicy(event, effect, event.methodArn);
+        apiKey = await ssm.getParameter(params).promise();
+        apiKey = apiKey.Parameter.Value;
+        effect = (event.headers.Authorization === apiKey)? 'Allow': 'Deny';
+        const policyDocument = await buildIAMPolicy(effect, event.methodArn);
         return policyDocument;
     }catch(error){
-        return 'Unauthorized';
+        throw error;
     }
 };

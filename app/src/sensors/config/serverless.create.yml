@@ -1,0 +1,33 @@
+create:
+  handler: app/src/sensors/main/create.handler
+  iamRoleStatements:
+    Effect: Allow
+    Action:
+      - dynamodb:PutItem
+    Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}
+  memorySize: 256
+  timeout: 10
+  package:
+    individually: true
+    exclude:
+      - app/src/**
+    include:
+      - app/src/sensors/main/create.js
+      - app/src/sensors/model/create.js
+      - app/src/sensors/controller/create.js
+      - app/helper/dynamodb_client/index.js
+  events:
+    - http:
+        path: /api/v1/events/sensors
+        method: post
+        cors:
+          origins: 
+            - "*"
+          headers:
+            - Content-Type
+            - Authorization
+        authorizer:
+          name: authorize
+          resultTtlInSeconds: 30
+          identitySource: method.request.header.Authorization
+          type: request

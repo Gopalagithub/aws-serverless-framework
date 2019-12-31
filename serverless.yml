@@ -1,18 +1,11 @@
 service:
   name: aws-serverless-assignment
 
-custom:
-  dynamodb:
-    start:
-      port: 8000
-      inMemory: true
-      migrate: true
-  supersecret: ${ssm:/mySense/Secrets/dev~true}
-
 # Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
   - serverless-offline
+
 package:
   individually: true
 
@@ -23,18 +16,27 @@ provider:
   stage: dev
   MemorySize: 128
   environment:
-    DYNAMODB_TABLE: SensorDataTable,
-    SECRET_KEY: ${ssm:/mySense/Secrets/dev~true}
+    DYNAMODB_TABLE: SensorDataTable
   iamRoleStatements:
-    - ${file(./app/iam/lambdaexecution.yml)}
-    - ${file(./app/iam/xray.yml)}
+    - ${file(./app/config/iam/lambdaexecution.yml)}
+    - ${file(./app/config/iam/xray.yml)}
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+        - dynamodb:Scan
+        - dynamodb:DeleteItem
+        - dynamodb:Query
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}
+
 functions:
-    - ${file(./app/authorizer/serverless.yml)}
-    - ${file(./app/sensor/create/serverless.yml)}
-    - ${file(./app/sensor/list/serverless.yml)}
-    - ${file(./app/sensor/get/serverless.yml)}
-    - ${file(./app/sensor/update/serverless.yml)}
-    - ${file(./app/sensor/delete/serverless.yml)}
+    - ${file(./app/helper/authorizers/custom_authorizer/serverless.yml)}
+    - ${file(./app/src/sensors/config/serverless.create.yml)}
+    - ${file(./app/src/sensors/config/serverless.delete.yml)}
+    - ${file(./app/src/sensors/config/serverless.get.yml)}
+    - ${file(./app/src/sensors/config/serverless.list.yml)}
+    - ${file(./app/src/sensors/config/serverless.update.yml)}
 
 resources:
   - ${file(./app/config/resources/dynamodb.yml)}

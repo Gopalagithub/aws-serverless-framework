@@ -1,0 +1,31 @@
+list:
+  handler: app/src/sensors/main/list.handler
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Scan
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}        
+  package:
+    individually: true
+    exclude:
+      - app/src/**
+    include:
+      - app/src/sensors/main/list.js
+      - app/src/sensors/model/list.js
+      - app/src/sensors/controller/list.js
+      - app/helper/dynamodb_client/index.js
+  events:
+    - http:
+        path: /api/v1/events/sensors
+        method: get
+        cors:
+          origins: 
+            - "*"
+          headers:
+            - Content-Type
+            - Authorization
+        authorizer:
+          name: authorize
+          resultTtlInSeconds: 30
+          identitySource: method.request.header.Authorization
+          type: request
