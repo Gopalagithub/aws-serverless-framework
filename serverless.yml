@@ -23,9 +23,11 @@ provider:
   stage: dev
   MemorySize: 128
   environment:
-    DYNAMODB_TABLE: SensorDataTable
+    DYNAMODB_TABLE: SensorDataTable,
+    SECRET_KEY: ${ssm:/mySense/Secrets/dev~true}
   iamRoleStatements:
-
+    - ${file(./app/iam/lambdaexecution.yml)}
+    - ${file(./app/iam/xray.yml)}
 functions:
     - ${file(./app/authorizer/serverless.yml)}
     - ${file(./app/sensor/create/serverless.yml)}

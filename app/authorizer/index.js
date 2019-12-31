@@ -14,7 +14,7 @@ const ssm = new AWS.SSM({region: 'ap-south-1'});
 exports.handler = async (event, context, callback) => {
     try{
         const params = {
-            Names: ['/mySense/Secrets/dev'],
+            Names: [process.env.SECRET_KEY],
             WithDecryption: true
         };
         let apiKey;

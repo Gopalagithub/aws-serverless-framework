@@ -1,5 +1,7 @@
 authorize:
   handler: app/authorizer/index.handler
+  environment:
+    SECRET_KEY: ${ssm:/mySense/Secrets/dev~true}
   package:
     individually: true
     exclude:
