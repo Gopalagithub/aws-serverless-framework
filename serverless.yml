@@ -24,10 +24,9 @@ provider:
   environment:
     DYNAMODB_TABLE: SensorDataTable
   iamRoleStatements:
-    - ${file(./app/config/iam/dynamodb.yml)}
-    - ${file(./app/config/iam/lambdaexecution.yml)}
 
 functions:
+    - ${file(./app/authorizer/serverless.yml)}
     - ${file(./app/sensor/create/serverless.yml)}
     - ${file(./app/sensor/list/serverless.yml)}
     - ${file(./app/sensor/get/serverless.yml)}

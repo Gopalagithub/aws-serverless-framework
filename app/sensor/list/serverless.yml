@@ -1,5 +1,10 @@
 list:
   handler: app/sensor/list/index.handler
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Scan
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}        
   package:
     individually: true
     exclude:
@@ -12,3 +17,4 @@ list:
         path: /api/v1/sensors
         method: get
         cors: true
+        authorizer: authorize

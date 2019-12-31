@@ -1,5 +1,10 @@
 create:
   handler: app/sensor/create/index.handler
+  iamRoleStatements:
+    Effect: Allow
+    Action:
+      - dynamodb:PutItem
+    Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}
   memorySize: 256
   timeout: 10
   package:
@@ -14,3 +19,4 @@ create:
         path: /api/v1/sensors
         method: post
         cors: true
+        authorizer: authorize

@@ -1,0 +1,9 @@
+authorize:
+  handler: app/authorizer/index.handler
+  package:
+    individually: true
+    exclude:
+      - app/**
+    include:
+      - app/authorizer/index.js
+      - app/authorizer/policy.js

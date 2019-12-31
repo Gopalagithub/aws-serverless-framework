@@ -1,5 +1,10 @@
 update:
   handler: app/sensor/update/index.handler
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:UpdateItem
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}
   package:
     individually: true
     exclude:
@@ -12,3 +17,4 @@ update:
         path: /api/v1/sensors
         method: put
         cors: true
+        authorizer: authorize

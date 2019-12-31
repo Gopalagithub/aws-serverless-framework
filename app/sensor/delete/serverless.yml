@@ -1,5 +1,10 @@
 delete:
   handler: app/sensor/delete/index.handler
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:DeleteItem
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}        
   package:
     individually: true
     exclude:
@@ -14,3 +19,4 @@ delete:
         path: /api/v1/sensors
         method: delete
         cors: true
+        authorizer: authorize
