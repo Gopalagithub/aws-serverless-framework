@@ -25,7 +25,6 @@ exports.handler = async (event, context, callback) => {
         const policyDocument = buildIAMPolicy(event, effect, event.methodArn);
         return policyDocument;
     }catch(error){
-        console.log(error);
         return 'Unauthorized';
     }
 };
