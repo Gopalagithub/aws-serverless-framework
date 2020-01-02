@@ -1,0 +1,9 @@
+Resources:
+  SensorsEventsDeletionTopic:
+    Type: 'AWS::SNS::Topic'
+  EmailSubsciption:
+    Type: 'AWS::SNS::Subscription'
+    Properties:
+      Endpoint: s.gopalakrishnashetty@gmail.com
+      Protocol: email
+      TopicArn: !Ref SensorsEventsDeletionTopic

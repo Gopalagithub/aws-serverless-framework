@@ -1,10 +1,11 @@
 create:
   handler: app/src/sensors/main/create.handler
+  iamRoleStatementsName: permitOnlyPut #optional custom role name setting instead of the default generated one 
   iamRoleStatements:
-    Effect: Allow
-    Action:
-      - dynamodb:PutItem
-    Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}
+    - Effect: "Allow"        
+      Action:
+        - dynamodb:PutItem        
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
   memorySize: 256
   timeout: 10
   package:

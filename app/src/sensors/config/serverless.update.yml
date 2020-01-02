@@ -1,10 +1,11 @@
 update:
   handler: app/src/sensors/main/update.handler
+  iamRoleStatementsName: permitOnlyUpdate #optional custom role name setting instead of the default generated one 
   iamRoleStatements:
-    - Effect: 'Allow'
+    - Effect: "Allow"        
       Action:
         - dynamodb:UpdateItem
-      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
   package:
     individually: true
     exclude:
