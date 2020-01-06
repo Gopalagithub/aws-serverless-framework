@@ -1,8 +1,9 @@
 /**
  * @description : it returns the json response data.
- * @param {statusCode} Number
- * @body  {body} JSON
  * @function {response}
+ * @param {statusCode} Number
+ * @param  {body} JSON
+ * @returns JSON
  */ 
 module.exports.response = async (statusCode, body) => {
     return {
