@@ -3,8 +3,8 @@
     # Overview
 
     I have assumed some real time feature while implimenting the solution. I have taken the fuel 
-    tank gauge which has the sesnors for messuring the tank level to notify the users via email
-    and slack. based on the use case i have created the API, i have assumed the flow saying,
+    tank gauge which has the sesnors for messuring the fuel level/water level to notify the users 
+    via email and slack. based on the use case i have created the API, i have assumed the flow saying,
     All the way the sensor data is raised from the fuek tank gauge gets delivered into dynamoDB
     via IoT core real but as we have no devices available its been populated from the API Gateway 
     directly through Rest API. 
