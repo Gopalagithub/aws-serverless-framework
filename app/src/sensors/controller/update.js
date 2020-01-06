@@ -1,5 +1,10 @@
 const {response} = require('../../../helper/index');
-
+/**
+  * Function validates and passthrough the request to data model
+  * @method updateAction
+  * @param {Object} event
+  * @returns {String} sensorId
+  */
 module.exports.updateAction = (event) => {
   try{
     const data = JSON.parse(event.body);

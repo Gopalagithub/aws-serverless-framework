@@ -1,6 +1,12 @@
 const {response} = require('../../../helper/index');
 const {listAllDataFromDB} = require('../model/list')
 
+/**
+  * Function validates and passthrough the request to data model
+  * @method listAction
+  * @param {Object} event
+  * @returns {String} filter for scan object
+  */
 module.exports.listAction = async (event) => {
   try{
     const data = JSON.parse(event.body);

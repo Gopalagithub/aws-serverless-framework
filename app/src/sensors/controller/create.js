@@ -1,6 +1,11 @@
 const uuid = require('uuid/v1');
 const {response} = require('../../../helper/index');
-
+/**
+  * Function validates and passthrough the request to data model.
+  * @method saveAction
+  * @param {Object} event
+  * @returns {Object} sensorDataObject
+  */
 module.exports.saveAction = (event) => {
   try{
     const data = JSON.parse(event.body);
