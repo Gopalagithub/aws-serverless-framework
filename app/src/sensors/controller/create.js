@@ -1,16 +1,20 @@
-const uuid = require('uuid');
+const uuid = require('uuid/v1');
+const {response} = require('../../../helper/index');
 
 module.exports.saveAction = (event) => {
-    const timestamp = new Date().getTime();
-    const data = event.body;
+  try{
+    const data = JSON.parse(event.body);
+    if(event.body === undefined){
+      throw new Error();
+    }
     const params = {
-      TableName: process.env.DYNAMODB_TABLE,
-      Item: {
-        sensorId: uuid.v1(),
-        payload: data,
-        createdAt: timestamp,
-        updatedAt: timestamp,
-      },
+        sensorId: uuid(),
+        clientId: data.deviceId,
+        sensorType: data.type,
+        properties: JSON.stringify(data.details)
     };
     return params;
+  }catch(error){
+    return response(500, {error: error.message});
+  }
 }

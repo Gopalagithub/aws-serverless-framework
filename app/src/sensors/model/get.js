@@ -1,20 +1,27 @@
-const {client} = require('../../../helper/dynamodb_client/index');
+const {sensors} = require('../../../schema/sensor');
+const {response} = require('../../../helper/index');
 
-module.exports.getByIdFromDB = async (params, callback) => {
+/**
+ * @description this function gets the details by sesnorId
+ * @method getSingleItemFromDB
+ * @return {Response}
+ * @param {sensorId}
+ */
+module.exports.getSingleItemFromDB = async (sensorId) => {
     try{
-      const data = await client.scan(params).promise();
-      responseBody = JSON.stringify(data.Items);
-      statusCode = 200;
-
-      return {
-        statusCode: statusCode,
-        headers: {
-            'Content-Type': "application/json"
-        },
-        body: responseBody,
-        isBase64Encoded: false
-      };
+        return await sensors.get(sensorId).then((data) => {
+            if(data === undefined){
+                return response(404, {message: 'Resource not found.'});
+            }
+            const freezedObject = Object.freeze({
+                id : data.sensorId,
+                deviceType : data.sensorType,
+                data: data.properties,
+                deviceId: data.clientId
+            });
+            return response(200, {data : freezedObject});
+        });
     }catch(error){
-        throw error;
+        return response(500, {Error : error.message});
     }
 };

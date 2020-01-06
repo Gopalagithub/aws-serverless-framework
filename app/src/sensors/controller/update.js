@@ -1,18 +1,18 @@
-const uuid = require('uuid');
+const {response} = require('../../../helper/index');
 
-module.exports.saveAction = (event) => {
-    const timestamp = new Date().getTime();
+module.exports.updateAction = (event) => {
+  try{
     const data = JSON.parse(event.body);
     const params = {
-      TableName: process.env.DYNAMODB_TABLE,
-      Key: {
-        sensorId: data.sensorId
-      },
-      UpdateExpression: "set clientId = :n",
-      ExpressionAttributeValues: {
-        ":n" : "JustChill"
-      },
-      ReturnValues: "SENSOR_TABLE_UPDATED"
+        sensorId: data.sensorId,
+        properties: data.properties
     };
     return params;
+  }catch(error){
+    if (e instanceof SyntaxError) {
+      return response(500, {error: error});
+    }else{
+      return response(400, {error: error});
+    }
+  }
 }

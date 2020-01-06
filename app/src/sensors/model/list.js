@@ -1,20 +1,27 @@
-const {client} = require('../../../helper/dynamodb_client/index');
+const {sensors} = require('../../../schema/sensor');
+const {response} = require('../../../helper/index');
 
-module.exports.listAllDataFromDB = async (params, callback) => {
+/**
+ * @description this function gets all the details of sensors data
+ * @method listAllDataFromDB
+ * @return {Response}
+ */
+module.exports.listAllDataFromDB = async (filter) => {
     try{
-      const data = await client.scan(params).promise();
-      responseBody = JSON.stringify(data.Items);
-      statusCode = 200;
-
-      return {
-        statusCode: statusCode,
-        headers: {
-            'Content-Type': "application/json"
-        },
-        body: responseBody,
-        isBase64Encoded: false
-      };
+        return await sensors.scan(filter).exec().then((ararayOfSensors)=>{
+            const sensorsData = [];
+            ararayOfSensors.forEach((item)=>{
+                sensorsData.push({
+                    id: item.sensorId,
+                    type: item.sensorType,
+                    deviceId: item.clientId,
+                    data: item.properties
+                });
+            })
+            return response(200, Object.freeze(sensorsData));
+            
+        });
     }catch(error){
-        throw error;
+        return response(500, {Error : error.message});
     }
 };

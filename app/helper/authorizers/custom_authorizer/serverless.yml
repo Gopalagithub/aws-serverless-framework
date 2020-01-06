@@ -1,9 +1,0 @@
-authorize:
-  handler: app/helper/authorizers/custom_authorizer/index.handler
-  package:
-    individually: true
-    exclude:
-      - app/**
-    include:
-      - app/helper/authorizers/custom_authorizer/index.js
-      - app/src/authorizer/policy.js

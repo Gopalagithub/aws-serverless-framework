@@ -1,19 +1,14 @@
-const {client} = require('../../../helper/dynamodb_client/index');
+const {sensors} = require('../../../schema/sensor');
+const {response} = require('../../../helper/index');
 
-module.exports.saveDateToDb = async (params, callback) => {
+/***
+ * 
+ */
+module.exports.updateDataToDb = async (params) => {
     try{
-      const data = await client.put(params).promise();
-      responseBody = JSON.stringify(data);
-      statusCode = 201;
-      return {
-        statusCode: statusCode,
-        headers: {
-            'Content-Type': "application/json"
-        },
-        body: responseBody,
-        isBase64Encoded: false
-      };
+        const data = await sensors.update(params.properties, {sensorId : params.sensorId});
+        return response(201, {succes: true})
     }catch(error){
-        throw error;
+        return response(500, {error: error});
     }
 };

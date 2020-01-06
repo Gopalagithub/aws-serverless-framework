@@ -1,10 +1,12 @@
+const {response} = require('../../../helper/index');
+
 module.exports.deleteAction = (event) => {
-    const data = JSON.parse(event.body);
-    const params = {
-      TableName: process.env.DYNAMODB_TABLE,
-      Key: {
-        sensorId: data.sensorId
-      },
-    };
-    return params;
+  try{
+    if(event.pathParameters.sensorId === undefined){
+      throw new Error();
+    }
+    return {sensorId: data.sensorId}; 
+  }catch(error){
+    return response(500, {error: error.message});
+  }
 }

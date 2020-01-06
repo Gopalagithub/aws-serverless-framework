@@ -1,7 +1,7 @@
-const { sensorAction } = require('../controller/get');
-const { sensorDbOperation } = require('../model/get');
+const { getAction } = require('../controller/get');
+const { getSingleItemFromDB } = require('../model/get');
 
-module.exports.handler = async (event, context, callback) => {
-  const data = sensorAction(event);
-  return await sensorDbOperation(data, callback);
+module.exports.handler = async (event) => {
+  const data = getAction(event);
+  return await getSingleItemFromDB(data);
 };

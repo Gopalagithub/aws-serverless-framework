@@ -23,8 +23,8 @@ provider:
     - ${file(./app/config/iam/xray.yml)}
 
 functions:
-  - ${file(./app/helper/streams/dynamodb/serverless.yml)}
-  - ${file(./app/helper/authorizers/custom_authorizer/serverless.yml)}
+  - ${file(./app/src/streams/dynamodb/serverless.yml)}
+  - ${file(./app/src/authorizers/custom_authorizer/serverless.yml)}
   - ${file(./app/src/sensors/config/serverless.create.yml)}
   - ${file(./app/src/sensors/config/serverless.delete.yml)}
   - ${file(./app/src/sensors/config/serverless.get.yml)}

@@ -9,16 +9,16 @@ list:
   package:
     individually: true
     exclude:
-      - app/src/**
+      - app/**
     include:
       - app/src/sensors/main/list.js
       - app/src/sensors/model/list.js
       - app/src/sensors/controller/list.js
-      - app/helper/dynamodb_client/index.js
+      - app/schema/sensor.js
   events:
     - http:
-        path: /api/v1/events/sensors
-        method: get
+        path: /api/v1/sensors
+        method: post
         cors:
           origins: 
             - "*"

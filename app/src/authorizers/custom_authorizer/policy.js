@@ -12,10 +12,10 @@ exports.buildIAMPolicy = (effect, resource) => {
   authResponse.principalId = 'user';
   if (effect && resource) {
     var policyDocument = {};
-    policyDocument.Version = '2012-10-17'; // default version
+    policyDocument.Version = '2012-10-17';
     policyDocument.Statement = [];
     var statementOne = {};
-    statementOne.Action = 'execute-api:Invoke'; // default action
+    statementOne.Action = 'execute-api:Invoke';
     statementOne.Effect = effect;
     statementOne.Resource = resource;
     policyDocument.Statement[0] = statementOne;

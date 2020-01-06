@@ -9,15 +9,15 @@ update:
   package:
     individually: true
     exclude:
-      - app/src/**
+      - app/**
     include:
       - app/src/sensors/main/update.js
       - app/src/sensors/model/update.js
       - app/src/sensors/controller/update.js
-      - app/helper/dynamodb_client/index.js
+      - app/schema/sensor.js
   events:
     - http:
-        path: /api/v1/events/sensors
+        path: /api/v1/sensor
         method: put
         cors:
           origins: 

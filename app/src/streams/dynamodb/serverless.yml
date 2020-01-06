@@ -1,5 +1,5 @@
 notify:
-  handler: app/helper/streams/dynamodb/index.handler
+  handler: app/src/streams/dynamodb/index.handler
   iamRoleStatementsName: permitReadingStreamAndSNSPublish
   iamRoleStatements:
     - Effect: "Allow"
@@ -28,5 +28,6 @@ notify:
     exclude:
       - app/**
     include:
-      - app/helper/streams/dynamodb/index.js
-      - app/helper/streams/dynamodb/publish.js
+      - app/src/streams/dynamodb/index.js
+      - app/src/streams/dynamodb/publish.js
+      - app/src/streams/dynamodb/slack.js

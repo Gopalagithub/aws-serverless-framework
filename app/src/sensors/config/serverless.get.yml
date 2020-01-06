@@ -9,13 +9,13 @@ get:
   package:
     individually: true
     exclude:
-      - app/src/**
+      - app/**
     include:
       - app/src/sensors/main/get.js
-      - app/helper/dynamodb_client/index.js
+      - app/schema/sensor.js
   events:
     - http:
-        path: /api/v1/events/sensors/{id}
+        path: /api/v1/sensor/{sensorId}
         method: get
         cors:
           origins: 

@@ -1,20 +1,11 @@
-const {client} = require('../../../helper/dynamodb_client/index');
+const {sensors} = require('../../../schema/sensor');
+const {response} = require('../../../helper/index');
 
-module.exports.deleteDataFromDB = async (params, callback) => {
+module.exports.deleteDataFromDB = async (params) => {
     try{
-      const data = await client.delete(params).promise();
-      responseBody = JSON.stringify(data);
-      statusCode = 204;
-
-      return {
-        statusCode: statusCode,
-        headers: {
-            'Content-Type': "application/json"
-        },
-        body: responseBody,
-        isBase64Encoded: false
-      };
+        await sensors.delete(params, {'update': true});
+        return response(204, {success: true});
     }catch(error){
-        throw error;
+        return (error instanceof SyntaxError) ? response(500, {error: error}): response(400, {error: error});
     }
 };
